@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+    <link name="depth_cam_link">
+        
+    </link>
+    <joint name="depth_cam_joint" type="fixed">
+        <parent link="camera_link"/>
+        <child link="depth_cam_link"/>
+        <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
+    </joint>
+
+
+    <!-- Gazebo depth camera -->
+  <gazebo reference="camera_link">
+            <sensor name="depthcam" type="depth">
+                <pose>0 0 0 0 0 0</pose>
+                <visualize>true</visualize>
+                <update_rate>30</update_rate>
+                <camera>
+                    <horizontal_fov>1.22</horizontal_fov>
+                        <image>
+                            <width>1280</width>
+                            <height>720</height>
+                            <format>B8G8R8</format>
+                        </image>
+                    <clip>
+                        <near>0.01</near>
+                        <far>5</far>
+                    </clip>
+                </camera>
+                <plugin name="depth_camera_controller" filename="libgazebo_ros_camera.so">
+                    <frame_name>depth_cam_link</frame_name>
+                    <baseline>0.2</baseline>
+                    <alwaysOn>true</alwaysOn>
+                    <visualize>true</visualize>
+                    <updateRate>0.0</updateRate>
+                    
+                    <pointCloudCutoff>0.2</pointCloudCutoff>
+                    <pointCloudCutoffMax>10.0</pointCloudCutoffMax>
+                </plugin>
+            </sensor>
+        </gazebo>
+
+</robot>
+
+
